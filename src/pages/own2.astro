@@ -1,0 +1,86 @@
+---
+---
+
+<script>
+    let timer;
+  
+    if (typeof window !== "undefined") {
+      timer = setTimeout(() => {
+        const image1 = document.getElementById("image1");
+        const images = document.querySelectorAll(".image-container img");
+  
+        // Hide the first image
+        image1!.classList.add("test");
+        
+        // Shift the remaining images to the left
+        images.forEach((img) => {
+            if (!img.classList.contains("test")) {
+                img.classList.add("shift-left");
+          }
+        });
+        setTimeout(() => {
+            let oldContainer = document.querySelector('.image-container')
+
+            let newContainer = document.createElement('div')
+            newContainer.classList.add('image-container')
+            newContainer.classList.add('ml-10')
+            
+            const img1 = document.createElement('img')
+            img1.classList.add('border-2')
+            img1.classList.add('border-red-500')
+            img1.setAttribute('src', '200.svg')
+            img1.setAttribute('id', 'image1')
+            img1.setAttribute('alt', 'Image 1')
+
+            const img2 = document.createElement('img')
+            img2.classList.add('border-2')
+            img2.classList.add('border-yellow-500')
+            img2.setAttribute('src', '200.svg')
+            img2.setAttribute('id', 'image2')
+            img2.setAttribute('alt', 'Image 2')
+
+            const img3 = document.createElement('img')
+            img3.classList.add('border-2')
+            img3.classList.add('border-green-500')
+            img3.setAttribute('src', '200.svg')
+            img3.setAttribute('id', 'image3')
+            img3.setAttribute('alt', 'Image 3')
+
+            newContainer.appendChild(img1)
+            newContainer.appendChild(img2)
+            newContainer.appendChild(img3)
+
+            oldContainer?.replaceWith(newContainer)
+
+            
+        }, 1000);
+      }, 3000);
+    }
+  </script>
+  
+  <div class="image-container ml-10">
+    <img class="border-2 border-indigo-500" src="200.svg" alt="Image 1" id="image1" />
+    <img class="border-2 border-red-500" src="200.svg" alt="Image 2" id="image2" />
+    <img class="border-2 border-yellow-500" src="200.svg" alt="Image 3" id="image3" />
+  </div>
+  
+  <style>
+    :global(.image-container) {
+      display: flex;
+      overflow: hidden;
+      width: 600px;
+    }
+  
+    :global(.image-container img) {
+      width: 200px;
+      transition: transform 0.5s ease;
+    }
+  
+    .shift-left {
+      transform: translateX(-200px);
+    }
+  
+    .hidden {
+      display: none;
+    }
+  </style>
