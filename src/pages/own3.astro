@@ -1,0 +1,87 @@
+---
+---
+
+<script>
+  const log = console.log
+  const list: string[] = [
+    '/200.svg',
+    '/200.svg',
+    '/200.svg',
+    '/200.svg'
+  ]
+  const colorMapper: { [key: number]: string } = {
+    1: 'border-indigo-500',
+    2: 'border-red-500',
+    3: 'border-yellow-500'
+  }
+  const createElement = (src: string, index: number) => {
+    const newImg = document.createElement('img')
+    newImg.setAttribute('src', src)
+    newImg.setAttribute('alt', `Image ${index}`)
+    newImg.setAttribute('id', `image${index}`)
+    newImg.classList.add('border-2')
+    newImg.classList.add(colorMapper[index + 1])
+    return newImg
+  }
+  const createElements = (itemList: string[]) => {
+    const container = document.querySelector('.image-container')
+    itemList.forEach((item, index) => {
+      const img = createElement(item, index)
+      container!.appendChild(img)
+    })
+  }
+  createElements(list)
+  const waitfor = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+
+    let timer;
+  
+    if (typeof window !== "undefined") {
+      timer = setTimeout(async () => {
+        const image1 = document.getElementById("image1");
+        const images = document.querySelectorAll(".image-container img");
+  
+        // Hide the first image
+        image1!.classList.add("test");
+        
+        // Shift the remaining images to the left
+        images.forEach((img) => {
+            if (!img.classList.contains("test")) {
+                img.classList.add("shift-left");
+          }
+        });
+        await waitfor(1000)
+        let container = document.querySelector('.image-container')
+        const newImage = createElement('/200.svg', 1)
+        debugger;
+        container!.replaceChild(newImage, container!.childNodes[0]);
+        await waitfor(1000)
+        container!.children[1].classList.add('myhidden')
+        // container!.children[1].classList.remove('shift-left')
+
+      }, 3000);
+    }
+  </script>
+  
+  <div class="image-container ml-10"></div>
+  
+  <style>
+    :global(.image-container) {
+      display: flex;
+      overflow: hidden;
+      width: 600px;
+    }
+  
+    :global(.image-container img) {
+      height: 200px;
+      width: 200px;
+      transition: transform 0.5s ease;
+    }
+  
+    .shift-left {
+      transform: translateX(-200px);
+    }
+  
+    :global(.myhidden) {
+      opacity: 0%;
+    }
+  </style>
